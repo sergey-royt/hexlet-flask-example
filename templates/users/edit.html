@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User {{  user['username']  }} edit</title>
+</head>
+<body>
+<div>
+<h1>Edit user information</h1>
+<hr>
+<form action="{{ url_for('update_user', id=id) }}" method="post">
+  <div>
+    <label for="username">Nickname:</label>
+    <input type="text" id="username" name="username"><br><br>
+    {% if errors.get('username') %}
+      <span>{{ errors['username'] }}</span>
+    {% endif %}
+  </div>
+  <div>
+    <label for="e-mail">Email:</label>
+    <input type="text" id="e-mail" name="e-mail"><br><br>
+  {% if errors.get('e-mail') %}
+    <span>{{ errors['e-mail'] }}</span>
+  {% endif %}
+  </div>
+  <input type="submit" value="Submit">
+  </div>
+</body>
+</html>

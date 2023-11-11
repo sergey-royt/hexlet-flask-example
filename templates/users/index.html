@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List of users</title>
+</head>
+<body>
+<h1>Users</h1>
+{% if auth %}
+    <form action="{{ url_for('log_out') }}" method="post">
+        <input type="submit" value="Log out">
+    </form>
+{% else %}
+    <a href="{{ url_for('log_in') }}">Log in</a>
+{% endif %}
+<a href="{{ url_for('page') }}">Create new user</a>
+{% if messages %}
+  <ul class=flashes>
+  {% for category, message in messages %}
+    <li class="{{ category }}">{{ message }}</li>
+  {% endfor %}
+  </ul>
+{% endif %}
+<hr>
+<form action="{{ url_for('list_users') }}" method="get">
+  <input type="search" required name="term" value="{{  search  }}" />
+  <input type="submit" value="Search">
+</form>
+<hr>
+<table>
+    {% for id in users %}
+    <tr>
+      <td>
+          {{ id }}
+      </td>
+      <td>
+          <a href="{{ url_for('get_user', id=id) }}">{{ users[id]['username'] }}</a>
+      </td>
+      <td>
+          <a href="{{ url_for('edit_page', id=id) }}">edit</a>
+      </td>
+      <td>
+          <form action="{{ url_for('delete_user', id=id) }}" method="post"
+                onsubmit="return confirm('Are you sure you want to delete user? This action cannot be undone.');">
+            <input type="submit" value="Remove">
+          </form>
+      </td>
+    </tr>
+    {% endfor %}
+</table>
+</body>
+</html>
